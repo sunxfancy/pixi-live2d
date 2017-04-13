@@ -46,10 +46,15 @@ declare module "pixi.js" {
          */
         modelBasePath?: string
 
+        /**
+         * default false
+         */
+        ignoreLayout?: boolean
+
         audioPlayer?: (filename: string, rootPath: string) => any;
     }
 
-    class Live2DSprite extends PIXI.DisplayObject {
+    class Live2DSprite extends PIXI.Sprite {
         constructor(modelDefine: object, options?: Live2DSpriteOptions);
         /**
          * 

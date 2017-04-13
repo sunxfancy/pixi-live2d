@@ -114,14 +114,13 @@ LAppModel.prototype.load = function(gl, modelDefine, callback)
 
 
 
-                        if (thisRef.modelSetting.getLayout())
+                        if (thisRef.modelSetting.getLayout() && thisref.options.ignoreLayout)
                         {
                             var layout = thisRef.modelSetting.getLayout();
                             if (layout["width"] != null)
                                 thisRef.modelMatrix.setWidth(layout["width"]);
                             if (layout["height"] != null)
                                 thisRef.modelMatrix.setHeight(layout["height"]);
-
                             if (layout["x"] != null)
                                 thisRef.modelMatrix.setX(layout["x"]);
                             if (layout["y"] != null)
