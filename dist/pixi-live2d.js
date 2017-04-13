@@ -531,12 +531,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'hitTest',
 	    value: function hitTest(id, x, y) {
-	      return this.model.hitTest(id, this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)), this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+	      if (this.modelReady) {
+	        return this.model.hitTest(id, this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)), this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+	      } else {
+	        return false;
+	      }
 	    }
 	  }, {
 	    key: 'setViewPoint',
 	    value: function setViewPoint(x, y) {
-	      this.dragMgr.setPoint(this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)), this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+	      if (this.modelReady) {
+	        this.dragMgr.setPoint(this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)), this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+	      }
 	    }
 	
 	    /* Some raw methods of Live2D */

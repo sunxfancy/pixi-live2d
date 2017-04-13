@@ -298,6 +298,7 @@ export default class Live2DSprite extends PIXI.Sprite {
       this.viewMatrix.adjustScale(cx, cy, scale);
     });
   }
+
   adjustTranslate(shiftX, shiftY) {
     this.onModelReady.push(() => {
       this.viewMatrix.adjustTranslate(shiftX, -shiftY);
@@ -316,6 +317,7 @@ export default class Live2DSprite extends PIXI.Sprite {
       this.model.setLipSyncValue(value);
     }
   }
+
   setRandomExpression() {
     this.onModelReady.push(() => {
       this.model.setRandomExpression();
@@ -349,13 +351,20 @@ export default class Live2DSprite extends PIXI.Sprite {
 
   /* Event methods */
   hitTest(id, x, y) {
-    return this.model.hitTest(id,
-      this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)),
-      this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+    if (this.modelReady) {
+      return this.model.hitTest(id,
+        this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)),
+        this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+    } else {
+      return false;
+    }
   }
+  
   setViewPoint(x, y) {
-    this.dragMgr.setPoint(this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)),
-      this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+    if (this.modelReady) {
+      this.dragMgr.setPoint(this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)),
+        this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+    }
   }
 
 
