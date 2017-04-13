@@ -26,6 +26,7 @@
     "type": "git",
     "url": "https://github.com/avgjs/pixi-live2d.git"
   },
+  "typings": "pixi-live2d.d.ts",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
