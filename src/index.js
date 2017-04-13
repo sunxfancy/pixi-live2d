@@ -110,7 +110,7 @@ export default class Live2DSprite extends PIXI.Sprite {
     this.projMatrix.multScale(ratio, 1);  // flip for rtt
 
     this.deviceToScreen = new L2DMatrix44();
-    this.deviceToScreen.multTranslate( -width / 2.0, -height / 2.0);
+    this.deviceToScreen.multTranslate(-width / 2.0, -height / 2.0);
     this.deviceToScreen.multScale(2 / width, -2 / height);
 
     Live2D.setGL(this.gl);
@@ -151,6 +151,11 @@ export default class Live2DSprite extends PIXI.Sprite {
     MatrixStack.pop();
   }
 
+  drawModel() {
+    this.model.update();
+    this.model.draw(this.gl);
+  }
+
   _renderWebGL(renderer) {
     if (!this.gl) {
       this.gl = renderer.gl;
@@ -182,7 +187,7 @@ export default class Live2DSprite extends PIXI.Sprite {
     } else {
       renderer.flush();
     }
-    
+
     const gl = renderer.gl;
 
     const arrayBuffer = gl.getParameter(gl.ARRAY_BUFFER_BINDING);
@@ -258,9 +263,9 @@ export default class Live2DSprite extends PIXI.Sprite {
     }
     scissorTestEnabled ? gl.enable(gl.SCISSOR_TEST) : gl.disable(gl.SCISSOR_TEST);
     stencilTestEnabled ? gl.enable(gl.STENCIL_TEST) : gl.disable(gl.STENCIL_TEST);
-    depthTestEnabled   ? gl.enable(gl.DEPTH_TEST) : gl.disable(gl.DEPTH_TEST);
-    cullFaceEnabled    ? gl.enable(gl.CULL_FACE) : gl.disable(gl.CULL_FACE);
-    blendEnabled       ? gl.enable(gl.BLEND) : gl.disable(gl.BLEND);
+    depthTestEnabled ? gl.enable(gl.DEPTH_TEST) : gl.disable(gl.DEPTH_TEST);
+    cullFaceEnabled ? gl.enable(gl.CULL_FACE) : gl.disable(gl.CULL_FACE);
+    blendEnabled ? gl.enable(gl.BLEND) : gl.disable(gl.BLEND);
 
     if (useVAO) {
       vao.unbind();
@@ -336,7 +341,7 @@ export default class Live2DSprite extends PIXI.Sprite {
       this.model.startMotion(name, no, priority);
     });
   }
-  playSound(filename, host='/') {
+  playSound(filename, host = '/') {
     this.onModelReady.push(() => {
       this.model.playSound(filename, host);
     });
@@ -350,7 +355,7 @@ export default class Live2DSprite extends PIXI.Sprite {
   }
   setViewPoint(x, y) {
     this.dragMgr.setPoint(this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)),
-    this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+      this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
   }
 
 
@@ -358,13 +363,13 @@ export default class Live2DSprite extends PIXI.Sprite {
   getParamFloat(key) {
     return this.model.getLive2DModel().getParamFloat(key);
   }
-  setParamFloat(key, value, weight=1) {
+  setParamFloat(key, value, weight = 1) {
     this.model.getLive2DModel().setParamFloat(key, value, weight);
   }
-  addToParamFloat(key, value, weight=1) {
+  addToParamFloat(key, value, weight = 1) {
     this.model.getLive2DModel().addToParamFloat(key, value, weight);
   }
-  multParamFloat(key, value, weight=1) {
+  multParamFloat(key, value, weight = 1) {
     this.model.getLive2DModel().multParamFloat(key, value, weight);
   }
 

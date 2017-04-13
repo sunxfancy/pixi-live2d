@@ -95,6 +95,8 @@ declare module "pixi.js" {
 
         addToParamFloat(key: string, value: number, weight: number): void;
 
-        multParamFloat(key: string, value: number, weight: number): void
+        multParamFloat(key: string, value: number, weight: number): void;
+
+        drawModel();
     }
 }
