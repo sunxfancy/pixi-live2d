@@ -52,7 +52,7 @@ declare module "pixi.js" {
     class Live2DSprite extends PIXI.DisplayObject {
         constructor(modelDefine: object, options?: Live2DSpriteOptions);
         /**
-         * 
+         *
          * @param cx center for scale, between 0-1.
          * @param cy center for scale, between 0-1.
          * @param scale ratio for scale.
@@ -60,13 +60,13 @@ declare module "pixi.js" {
         adjustScale(cx: number, cy: number, scale: number): void;
 
         /**
-         * 
+         *
          * @param shiftX between 0-1.
          * @param shiftY between 0-1.
          */
         adjustTranslate(shiftX: number, shiftY: number): void;
 
-        setLipSync(value: boolean | null): void;
+        setLipSync(value: number | null): void;
 
         setRandomExpression(): void;
 

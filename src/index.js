@@ -181,7 +181,7 @@ export default class Live2DSprite extends PIXI.Sprite {
     } else {
       renderer.flush();
     }
-    
+
     const gl = renderer.gl;
 
     const arrayBuffer = gl.getParameter(gl.ARRAY_BUFFER_BINDING);
