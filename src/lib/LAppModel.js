@@ -448,20 +448,20 @@ LAppModel.prototype.playSound = function(filename, host)
             const intervalId = setInterval(() => {
                 const dataArray = new Uint8Array(bufferLength);
                 analyser.getByteFrequencyData(dataArray);
-                const value = (dataArray[9] + dataArray[10] + dataArray[11]) / 3;
+                const value = (dataArray.reduce((previous, current) => current += previous)) / bufferLength;
                 if (Date.now() - lastTime  < 33) {
                     cache.push(value);
                 } else {
                     const lipValue = cache.length ?
-                    (cache.reduce((previous, current) => current += previous) / cache.length / 100)
+                    (cache.reduce((previous, current) => current += previous) * 0.008 / cache.length )
                     : this.lipSyncValue;
                     this.lipSync = true;
                     this.lipSyncValue = lipValue;
-                    console.log('lip', lipValue);
                     lastTime = Date.now();
                     cache = [];
                 }
             }, 0);
+
             audio.addEventListener('ended', () => {
                 clearInterval(intervalId);
                 this.lipSyncValue = 0;
