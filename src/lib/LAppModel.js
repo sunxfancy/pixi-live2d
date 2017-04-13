@@ -458,6 +458,7 @@ LAppModel.prototype.playSound = function(filename, host)
                     : this.lipSyncValue;
                     this.lipSync = true;
                     this.lipSyncValue = lipValue;
+                    console.log('lip', lipValue);
                     lastTime = Date.now();
                     cache = [];
                 }
