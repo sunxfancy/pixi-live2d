@@ -101,7 +101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -175,7 +175,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      randomMotion: true,
 	      defaultMotionGroup: "idle",
 	      audioPlayer: null,
-	      modelBasePath: './'
+	      modelBasePath: './',
+	      ignoreLayout: false
 	    }, options);
 	
 	    _live2d.Live2D.init();
@@ -277,6 +278,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.model.draw(this.gl);
 	
 	      _MatrixStack2.default.pop();
+	    }
+	  }, {
+	    key: 'drawModel',
+	    value: function drawModel() {
+	      this.model.update();
+	      this.model.draw(this.gl);
 	    }
 	  }, {
 	    key: '_renderWebGL',
@@ -524,12 +531,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'hitTest',
 	    value: function hitTest(id, x, y) {
-	      return this.model.hitTest(id, this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)), this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+	      if (this.modelReady) {
+	        return this.model.hitTest(id, this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)), this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+	      } else {
+	        return false;
+	      }
 	    }
 	  }, {
 	    key: 'setViewPoint',
 	    value: function setViewPoint(x, y) {
-	      this.dragMgr.setPoint(this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)), this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+	      if (this.modelReady) {
+	        this.dragMgr.setPoint(this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)), this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
+	      }
 	    }
 	
 	    /* Some raw methods of Live2D */
@@ -574,9 +587,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  console.error('Error: Cannot find global variable `PIXI`, Live2D plguin will not be installed.');
 	}
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 	
@@ -604,9 +617,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.BaseDataID = BaseDataID;
 	exports.ParamID = ParamID;
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -708,11 +721,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        thisRef.pose = null;
 	                    }
 	
-	                    if (thisRef.modelSetting.getLayout()) {
+	                    if (!thisRef.modelSetting.getLayout() && thisRef.options.ignoreLayout) {
 	                        var layout = thisRef.modelSetting.getLayout();
 	                        if (layout["width"] != null) thisRef.modelMatrix.setWidth(layout["width"]);
 	                        if (layout["height"] != null) thisRef.modelMatrix.setHeight(layout["height"]);
-	
 	                        if (layout["x"] != null) thisRef.modelMatrix.setX(layout["x"]);
 	                        if (layout["y"] != null) thisRef.modelMatrix.setY(layout["y"]);
 	                        if (layout["center_x"] != null) thisRef.modelMatrix.centerX(layout["center_x"]);
@@ -1032,9 +1044,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return false;
 	};
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -2568,9 +2580,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	//     Live2DFramework.platformManager = platformManager;
 	// }
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -2598,9 +2610,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  request.send(null);
 	}
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
@@ -2705,9 +2717,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    mat4.multiply(this.currentMatrix, this.currentMatrix, matNew);
 	};
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -4958,9 +4970,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	module.exports = mat4;
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 	
@@ -5038,9 +5050,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = glMatrix;
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
-/***/ },
+/***/ }),
 /* 8 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 	
@@ -5203,13 +5215,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return this.json[this.INIT_PARTS_VISIBLE][n][this.VALUE];
 	};
 
-/***/ },
+/***/ }),
 /* 9 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_9__;
 
-/***/ }
+/***/ })
 /******/ ])
 });
 ;
