@@ -544,6 +544,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.dragMgr.setPoint(this.viewMatrix.invertTransformX(this.deviceToScreen.transformX(x)), this.viewMatrix.invertTransformY(this.deviceToScreen.transformY(y)));
 	      }
 	    }
+	  }, {
+	    key: 'resize',
+	    value: function resize(width, height) {
+	      this.texture.resize(width, height);
+	      this.x = width / 2;
+	      this.y = height / 2;
+	      var ratio = height / width;
+	      var left = -1;
+	      var right = 1;
+	      var bottom = -ratio;
+	      var top = ratio;
+	
+	      this.viewMatrix = new _Live2DFramework.L2DViewMatrix();
+	      this.viewMatrix.setMaxScreenRect(-2, 2, -2, 2);
+	      this.viewMatrix.setScreenRect(left, right, bottom, top);
+	
+	      this.projMatrix = new _Live2DFramework.L2DMatrix44();
+	      this.projMatrix.multScale(ratio, 1);
+	
+	      this.deviceToScreen = new _Live2DFramework.L2DMatrix44();
+	      this.deviceToScreen.multTranslate(-width / 2.0, -height / 2.0);
+	      this.deviceToScreen.multScale(2 / width, -2 / height);
+	    }
 	
 	    /* Some raw methods of Live2D */
 	
