@@ -97,6 +97,6 @@ declare module "pixi.js" {
 
         multParamFloat(key: string, value: number, weight: number): void;
 
-        drawModel();
+        resize(width:number, height:number):void
     }
 }
