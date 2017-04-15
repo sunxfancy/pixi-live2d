@@ -45,12 +45,7 @@ declare module "pixi.js" {
          * default './'
          */
         modelBasePath?: string
-
-        /**
-         * default false
-         */
-        ignoreLayout?: boolean
-
+        
         audioPlayer?: (filename: string, rootPath: string) => any;
     }
 

@@ -175,8 +175,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      randomMotion: true,
 	      defaultMotionGroup: "idle",
 	      audioPlayer: null,
-	      modelBasePath: './',
-	      ignoreLayout: false
+	      modelBasePath: './'
 	    }, options);
 	
 	    _live2d.Live2D.init();
@@ -744,7 +743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        thisRef.pose = null;
 	                    }
 	
-	                    if (!thisRef.modelSetting.getLayout() && thisRef.options.ignoreLayout) {
+	                    if (thisRef.modelSetting.getLayout()) {
 	                        var layout = thisRef.modelSetting.getLayout();
 	                        if (layout["width"] != null) thisRef.modelMatrix.setWidth(layout["width"]);
 	                        if (layout["height"] != null) thisRef.modelMatrix.setHeight(layout["height"]);

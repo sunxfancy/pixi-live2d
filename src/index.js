@@ -54,8 +54,7 @@ export default class Live2DSprite extends PIXI.Sprite {
       randomMotion: true,
       defaultMotionGroup: "idle",
       audioPlayer: null,
-      modelBasePath: './',
-      ignoreLayout: false
+      modelBasePath: './'
     }, options);
 
     Live2D.init();
