@@ -114,7 +114,7 @@ LAppModel.prototype.load = function(gl, modelDefine, callback)
 
 
 
-                        if (!thisRef.modelSetting.getLayout() && thisRef.options.ignoreLayout)
+                        if (thisRef.modelSetting.getLayout())
                         {
                             var layout = thisRef.modelSetting.getLayout();
                             if (layout["width"] != null)
