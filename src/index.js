@@ -277,7 +277,7 @@ export default class Live2DSprite extends PIXI.Sprite {
   }
 
   destroy(...args) {
-    this.model.release();
+    this.model.release(this.gl);
     super.destroy(...args);
   }
 

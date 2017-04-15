@@ -186,6 +186,7 @@ LAppModel.prototype.release = function(gl)
     // var pm = Live2DFramework.getPlatformManager();
     //
     // gl.deleteTexture(pm.texture);
+    this.audioContext.close();
 }
 
 
@@ -426,7 +427,7 @@ LAppModel.prototype.playSound = function(filename, host)
     if (this.options.audioPlayer) {
         this.options.audioPlayer(filename, host);
     } else {
-        const audio = this.audioElement || document.createElement("audio");
+        const audio = this.audioElement || document.getElementById("live2d-audio") || LAppModel.createAudioElement();
         !this.audioElement && (this.audioElement = audio);
         audio.src = host + filename;
 
@@ -528,4 +529,13 @@ LAppModel.prototype.hitTest = function(id, testX, testY)
     }
 
     return false;
+}
+
+LAppModel.createAudioElement = function () {
+    var audio = document.createElement("audio");
+    if (audio) {
+        audio.id = "live2d-audio";
+        return audio;
+    }
+    return null;
 }
