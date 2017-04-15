@@ -414,7 +414,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function destroy() {
 	      var _get2;
 	
-	      this.model.release();
+	      this.model.release(this.gl);
 	
 	      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
 	        args[_key] = arguments[_key];
@@ -791,6 +791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // var pm = Live2DFramework.getPlatformManager();
 	    //
 	    // gl.deleteTexture(pm.texture);
+	    this.audioContext.close();
 	};
 	
 	LAppModel.prototype.preloadMotionGroup = function (name) {
@@ -972,7 +973,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.options.audioPlayer) {
 	        this.options.audioPlayer(filename, host);
 	    } else {
-	        var audio = this.audioElement || document.createElement("audio");
+	        var audio = this.audioElement || document.getElementById("live2d-audio") || LAppModel.createAudioElement();
 	        !this.audioElement && (this.audioElement = audio);
 	        audio.src = host + filename;
 	
@@ -1065,6 +1066,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    return false;
+	};
+	
+	LAppModel.createAudioElement = function () {
+	    var audio = document.createElement("audio");
+	    if (audio) {
+	        audio.id = "live2d-audio";
+	        return audio;
+	    }
+	    return null;
 	};
 
 /***/ }),
