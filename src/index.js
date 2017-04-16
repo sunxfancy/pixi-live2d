@@ -343,8 +343,10 @@ export default class Live2DSprite extends PIXI.Sprite {
     });
   }
   playSound(filename, host = '/') {
-    this.onModelReady.push(() => {
-      this.model.playSound(filename, host);
+    return new Promise((resolve, reject) => {
+      this.onModelReady.push(() => {
+        this.model.playSound(filename, host, resolve, reject);
+      });
     });
   }
 

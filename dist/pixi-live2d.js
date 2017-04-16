@@ -520,8 +520,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      var host = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '/';
 	
-	      this.onModelReady.push(function () {
-	        _this10.model.playSound(filename, host);
+	      return new Promise(function (resolve, reject) {
+	        _this10.onModelReady.push(function () {
+	          _this10.model.playSound(filename, host, resolve, reject);
+	        });
 	      });
 	    }
 	
@@ -966,11 +968,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 	
-	LAppModel.prototype.playSound = function (filename, host) {
+	LAppModel.prototype.playSound = function (filename, host, resolve, reject) {
 	    var _this = this;
 	
 	    if (this.options.audioPlayer) {
-	        this.options.audioPlayer(filename, host);
+	        this.options.audioPlayer(filename, host, resolve, reject);
 	    } else {
 	        var audio = this.audioElement || document.getElementById("live2d-audio") || LAppModel.createAudioElement();
 	        !this.audioElement && (this.audioElement = audio);
@@ -1013,6 +1015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            audio.addEventListener('ended', function () {
 	                clearInterval(intervalId);
 	                _this.lipSyncValue = 0;
+	                resolve && resolve();
 	            });
 	            source.connect(analyser);
 	            analyser.connect(context.destination);
