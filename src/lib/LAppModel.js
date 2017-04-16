@@ -422,10 +422,10 @@ LAppModel.prototype.setFadeInFadeOut = function(name, no, priority, motion)
     }
 }
 
-LAppModel.prototype.playSound = function(filename, host)
+LAppModel.prototype.playSound = function(filename, host, resolve, reject)
 {
     if (this.options.audioPlayer) {
-        this.options.audioPlayer(filename, host);
+        this.options.audioPlayer(filename, host, resolve, reject);
     } else {
         const audio = this.audioElement || document.getElementById("live2d-audio") || LAppModel.createAudioElement();
         !this.audioElement && (this.audioElement = audio);
@@ -466,6 +466,7 @@ LAppModel.prototype.playSound = function(filename, host)
             audio.addEventListener('ended', () => {
                 clearInterval(intervalId);
                 this.lipSyncValue = 0;
+                resolve && resolve();
             });
             source.connect(analyser);
             analyser.connect(context.destination);

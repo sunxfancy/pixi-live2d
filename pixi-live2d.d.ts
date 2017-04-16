@@ -45,8 +45,8 @@ declare module "pixi.js" {
          * default './'
          */
         modelBasePath?: string
-        
-        audioPlayer?: (filename: string, rootPath: string) => any;
+
+        audioPlayer?: (filename: string, rootPath: string, resolve: () => void, reject: (reason: any) => void) => any;
     }
 
     class Live2DSprite extends PIXI.Sprite {
@@ -78,7 +78,7 @@ declare module "pixi.js" {
 
         startMotion(name: string, no: number, priority?: number): void;
 
-        playSound(filename: string, host?: string): void;
+        playSound(filename: string, host?: string): Promise<void>;
 
         hitTest(id: string, x: number, y: number): boolean;
 
@@ -92,6 +92,6 @@ declare module "pixi.js" {
 
         multParamFloat(key: string, value: number, weight: number): void;
 
-        resize(width:number, height:number):void
+        resize(width: number, height: number): void
     }
 }
